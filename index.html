@@ -14,13 +14,11 @@
 	<script src="jquery.purrrify.js"></script>
 	<script>
 	  $(function(){
-	    $('#doit').click(function(){
-	      $('body').purrrify();
-	    });
+	    $('#doit').purrrify();
 	    
-	    $('#undo').click(function(){
-	      $('body').purrrify('destroy');
-	    });
+      $('#undo').click(function(){
+        $('#doit').purrrify('undo');
+      });
 
 	  });
 	</script>

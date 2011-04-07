@@ -7,15 +7,16 @@
     	return this.each(function() {
     		var $this = $(this),
     		    opts = $.extend({}, $.fn.purrrify.defaults, options),
-            data = $this.data('purrrify');
+            data = $this.data('purrrify'),
+            $imgs = $(opts.context).find(opts.selector);
 
 
         // If the plugin hasn't been initialized yet
         if ( ! data ) {
-          // do all your main awesomeness in here...
-          
-          function theMagic(){
-            var $imgs = $this.find('img');
+
+          $this.bind('click', function(){
+            
+            // var $imgs = $(opts.context).find(opts.selector);
             $imgs.each(function(){
               var h = $(this).height(),
                   w = $(this).width(),
@@ -25,26 +26,18 @@
               if (opts.bw) {
                 src += 'g/';
               };
-              
+
               //  store original src for reverting:
               $(this).data( 'purrrify.original', $(this).attr('src') );
-              
+
               //  bring on the kittens!
               $(this).attr( 'src', src + w + '/' + h );
-              
+
             });
 
-          };
-          
-          if (!opts.onload) {
-            theMagic();
-          }else{
-            $(window).load(function(){
-              setTimeout(theMagic, opts.onload || 0);
-            });
-          };
+          });
             
-          //  attach
+          //  attach kitten burs:
           $this.data('purrrify', {
             target : $this,
             opts: opts
@@ -53,13 +46,15 @@
         };
       });
     },
-    destroy: function() {
+    undo: function() {
       return this.each(function() {
-        var $imgs = $(this).find('img');
+        var opts = $(this).data('purrrify').opts,
+            $imgs = $(opts.context).find(opts.selector);
         $imgs.each(function(){
           $(this).attr( 'src', $(this).data('purrrify.original') );
+          $(this).removeData('purrrify.original');
         });
-        $(this).removeData('purrrify');
+        // $(this).removeData('purrrify');
       });
     }
   };
@@ -77,8 +72,9 @@
 
   //	defaults
   $.fn.purrrify.defaults = {
-    bw: false,
-    onload: false
+    bw: false,            // use black and white images?
+    context: 'body',      // context of the selector search
+    selector: 'img'       // must be img elements!
   };
 
   // $.fn.purrrify.publicfunc = function() { return "jquery.purrrify public function. "; };
