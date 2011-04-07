@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>jquery.purrrify</title>
+	<style type="text/css" media="screen">
+	 #doit, #undo   { position: fixed; right: 50px; top: 50px; }
+	 #undo          { top: 75px; }
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script src="jquery.purrrify.js"></script>
+	<script>
+	  $(function(){
+	    $('#doit').click(function(){
+	      $('body').purrrify();
+	    });
+	    
+	    $('#undo').click(function(){
+	      $('body').purrrify('destroy');
+	    });
+
+	  });
+	</script>
+</head>
+
+<body>
+
+<p><img src="http://farm4.static.flickr.com/3337/4597107633_49dc2253ef_o.jpg" alt="" width="200" /></p>
+<p><img src="http://farm4.static.flickr.com/3358/4597108157_a90ee422a0_o.jpg" alt="" width="400" /></p>
+<p><img src="http://farm2.static.flickr.com/1421/4597107235_50f51d464a_o.jpg" alt="" width="100" /></p>
+<p><img src="http://farm5.static.flickr.com/4067/4597722526_6e87fd62bc_o.jpg" alt="" width="500" /></p>
+
+
+<button id="doit">Bring on the kittens!</button>
+<button id="undo">Undo</button>
+
+</body>
+</html>
