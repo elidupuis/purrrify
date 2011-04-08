@@ -2,10 +2,9 @@
 
   var methods = {
     init: function( options ) {
-  		var opts = $.extend({}, $.purrrify.defaults, options),
+  		var opts = $.extend(true, {}, $.purrrify.defaults, options),
           data = $('body').data('purrrify'),
           $imgs = $(opts.context).find(opts.selector);
-
 
       // If the plugin hasn't been initialized yet
       if ( ! data ) {
