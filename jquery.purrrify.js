@@ -52,7 +52,7 @@
           if(window.console) window.console.log('event');
           $(opts.trigger.selector).bind(opts.trigger.event, function(){
             makeItHappen();
-          })
+          });
         };
         
         //  attach kitten burs:
@@ -88,7 +88,7 @@
   $.purrrify.defaults = {
     context: 'body',      // context of the selector search
     selector: 'img',      // must be img elements!
-    bw: false,            // use black and white images?
+    grayscale: false,     // use black and white images?
     trigger: { selector: '#doit', event: 'click' }   // object literal with jquery selector & event type or string 'konami' or 'onload'
   };
 
