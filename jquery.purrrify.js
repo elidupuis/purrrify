@@ -56,8 +56,12 @@
           });
         }else{
           if(window.console) window.console.log('event');
-          $(opts.trigger.selector).bind(opts.trigger.event, function(){
-            makeItHappen();
+          var e = opts.trigger.event + '.purrrify';
+          $(opts.trigger.selector).bind(e, function(){
+            if ( !$('body').hasClass('purrrified') ) {
+              makeItHappen();
+            };
+            $('body').addClass('purrrified');
             return false;
           });
         };
@@ -77,7 +81,19 @@
         $(this).attr( 'src', $(this).data('purrrify.original') );
         $(this).removeData('purrrify.original');
       });
+      $('body').removeClass('purrrified');
     }
+    // ,destroy: function(){
+    //       if(window.console) window.console.log('destroy() called');
+    //       var opts = $('body').data('purrrify').opts,
+    //           $imgs = $(opts.context).find(opts.selector);
+    //       $(opts.trigger.selector).unbind('.purrrify');
+    //       $imgs.each(function(){
+    //         $(this).attr( 'src', $(this).data('purrrify.original') );
+    //         $(this).removeData('purrrify.original');
+    //       });
+    //       $('body').removeClass('purrrified');
+    //     }
   };
 
   // main plugin declaration:
