@@ -24,7 +24,13 @@
 
             //  store original src for reverting:
             $(this).data( 'purrrify.original', $(this).attr('src') );
-
+            
+            if (opts.fadeIn) {
+              $(this).css({ opacity: 0 }).load(function(){
+                $(this).animate({ opacity: 1 });
+              });
+            };
+            
             //  bring on the kittens!
             $(this).attr( 'src', src + w + '/' + h );
 
@@ -52,6 +58,7 @@
           if(window.console) window.console.log('event');
           $(opts.trigger.selector).bind(opts.trigger.event, function(){
             makeItHappen();
+            return false;
           });
         };
         
@@ -89,6 +96,7 @@
     context: 'body',      // context of the selector search
     selector: 'img',      // must be img elements!
     grayscale: false,     // use black and white images?
+    fadeIn: true,         // fade in teh kittens!
     trigger: { selector: '#doit', event: 'click' }   // object literal with jquery selector & event type or string 'konami' or 'onload'
   };
 
