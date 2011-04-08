@@ -2,65 +2,79 @@
 
   var methods = {
     init: function( options ) {
-      if(window.console) window.console.log('init', options);
-      // iterate and reformat each matched element
-    	return this.each(function() {
-    		var $this = $(this),
-    		    opts = $.extend({}, $.fn.purrrify.defaults, options),
-            data = $this.data('purrrify'),
-            $imgs = $(opts.context).find(opts.selector);
+  		var opts = $.extend({}, $.purrrify.defaults, options),
+          data = $('body').data('purrrify'),
+          $imgs = $(opts.context).find(opts.selector);
 
 
-        // If the plugin hasn't been initialized yet
-        if ( ! data ) {
+      // If the plugin hasn't been initialized yet
+      if ( ! data ) {
 
-          $this.bind('click', function(){
-            
-            // var $imgs = $(opts.context).find(opts.selector);
-            $imgs.each(function(){
-              var h = $(this).height(),
-                  w = $(this).width(),
-                  src = 'http://placekitten.com/';
+        function makeItHappen(){
+          if(window.console) window.console.log('makeItHappen() called');
+          $imgs.each(function(){
+            var h = $(this).height(),
+                w = $(this).width(),
+                src = 'http://placekitten.com/';
 
-              //  black and white option:
-              if (opts.bw) {
-                src += 'g/';
-              };
+            //  black and white option:
+            if (opts.bw) {
+              src += 'g/';
+            };
 
-              //  store original src for reverting:
-              $(this).data( 'purrrify.original', $(this).attr('src') );
+            //  store original src for reverting:
+            $(this).data( 'purrrify.original', $(this).attr('src') );
 
-              //  bring on the kittens!
-              $(this).attr( 'src', src + w + '/' + h );
-
-            });
+            //  bring on the kittens!
+            $(this).attr( 'src', src + w + '/' + h );
 
           });
-            
-          //  attach kitten burs:
-          $this.data('purrrify', {
-            target : $this,
-            opts: opts
-          });
-
         };
-      });
+        
+
+        if (opts.trigger === 'konami') {
+          if(window.console) window.console.log('konami');
+          var kkeys = [], konami = "38,38,40,40,37,39,37,39,66,65";
+          $(document).keydown(function(e) {
+            kkeys.push( e.keyCode );
+            if ( kkeys.toString().indexOf( konami ) >= 0 ){
+              $(document).unbind('keydown',arguments.callee);
+              makeItHappen();
+            }
+          });
+        }else if(opts.trigger === 'onload'){
+          if(window.console) window.console.log('onload');
+          $(window).load(function(){
+            if(window.console) window.console.log('window.load');
+            makeItHappen();
+          });
+        }else{
+          if(window.console) window.console.log('event');
+          $(opts.trigger.selector).bind(opts.trigger.event, function(){
+            makeItHappen();
+          })
+        };
+        
+        //  attach kitten burs:
+        $('body').data('purrrify', {
+          opts: opts
+        });
+
+      };
     },
     undo: function() {
-      return this.each(function() {
-        var opts = $(this).data('purrrify').opts,
-            $imgs = $(opts.context).find(opts.selector);
-        $imgs.each(function(){
-          $(this).attr( 'src', $(this).data('purrrify.original') );
-          $(this).removeData('purrrify.original');
-        });
-        // $(this).removeData('purrrify');
+      if(window.console) window.console.log('undo() called');
+      var opts = $('body').data('purrrify').opts,
+          $imgs = $(opts.context).find(opts.selector);
+      $imgs.each(function(){
+        $(this).attr( 'src', $(this).data('purrrify.original') );
+        $(this).removeData('purrrify.original');
       });
     }
   };
 
   // main plugin declaration:
-  $.fn.purrrify = function( method ) {
+  $.purrrify = function( method ) {
     if ( methods[method] ) {
       return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
     } else if ( typeof method === 'object' || ! method ) {
@@ -71,12 +85,11 @@
   };
 
   //	defaults
-  $.fn.purrrify.defaults = {
-    bw: false,            // use black and white images?
+  $.purrrify.defaults = {
     context: 'body',      // context of the selector search
-    selector: 'img'       // must be img elements!
+    selector: 'img',      // must be img elements!
+    bw: false,            // use black and white images?
+    trigger: { selector: '#doit', event: 'click' }   // object literal with jquery selector & event type or string 'konami' or 'onload'
   };
-
-  // $.fn.purrrify.publicfunc = function() { return "jquery.purrrify public function. "; };
 
 })(jQuery);

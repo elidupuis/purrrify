@@ -14,10 +14,10 @@
 	<script src="jquery.purrrify.js"></script>
 	<script>
 	  $(function(){
-	    $('#doit').purrrify();
+	    $.purrrify({ trigger: 'konami' } );
 	    
       $('#undo').click(function(){
-        $('#doit').purrrify('undo');
+        $.purrrify('undo');
       });
 
 	  });
