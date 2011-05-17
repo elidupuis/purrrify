@@ -10,16 +10,16 @@
       if ( ! data ) {
 
         function makeItHappen(){
-          if(window.console) window.console.log('makeItHappen() called');
+          // if(window.console) window.console.log('makeItHappen() called');
           $imgs.each(function(){
             var h = $(this).height(),
                 w = $(this).width(),
-                src = 'http://placekitten.com/';
+                src = opts.service;
 
             //  black and white option:
-            if (opts.bw) {
-              src += 'g/';
-            };
+            // if (opts.bw) {
+            //   src += 'g/';
+            // };
 
             //  store original src for reverting:
             $(this).data( 'purrrify.original', $(this).attr('src') );
@@ -31,7 +31,7 @@
             };
             
             //  bring on the kittens!
-            $(this).attr( 'src', src + w + '/' + h );
+            $(this).attr( 'src', src.replace('{w}', w).replace('{h}', h) );
 
           });
         };
@@ -110,7 +110,8 @@
   $.purrrify.defaults = {
     context: 'body',      // context of the selector search
     selector: 'img',      // must be img elements!
-    grayscale: false,     // use black and white images?
+    // grayscale: false,     // use black and white images?
+    service: 'http://placekitten.com/{w}/{h}/', //  might i suggest 'http://placedog.com/{w}/{h}'
     fadeIn: true,         // fade in teh kittens!
     trigger: { selector: '#doit', event: 'click' }   // object literal with jquery selector & event type or string 'konami' or 'onload'
   };
