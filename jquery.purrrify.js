@@ -111,7 +111,7 @@
     context: 'body',      // context of the selector search
     selector: 'img',      // must be img elements!
     // grayscale: false,     // use black and white images?
-    service: 'http://placekitten.com/{w}/{h}/', //  might i suggest 'http://placedog.com/{w}/{h}'
+    service: 'http://placekitten.com/{w}/{h}', //  might i suggest 'http://placedog.com/{w}/{h}'
     fadeIn: true,         // fade in teh kittens!
     trigger: { selector: '#doit', event: 'click' }   // object literal with jquery selector & event type or string 'konami' or 'onload'
   };
